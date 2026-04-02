@@ -41,8 +41,8 @@ class ElectricFieldCombinator(BaseProcessingObj):
         has_list = in_ef_list is not None and len(in_ef_list) > 0
         has_legacy = in_ef1 is not None and in_ef2 is not None
 
-        # Validation: Ensure at least one valid input combination is provided
-        if not has_list and not has_legacy:
+        # Validation: Ensure at least one valid input combination is provided, but not both
+        if not has_list and not has_legacy or (has_list and has_legacy):
             raise ValueError(
                 "ElectricFieldCombinator requires either 'in_ef_list' to be populated, "
                 "or BOTH 'in_ef1' and 'in_ef2' to be connected."
