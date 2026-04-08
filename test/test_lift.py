@@ -68,7 +68,7 @@ class TestLift(unittest.TestCase):
             npix_side=16,
             fft_res=3,
         )
-        expected = np.pi / (4.0 * settings.fft_res)
+        expected = np.pi / (2.0 * settings.fft_res)
         self.assertAlmostEqual(lift.radians_per_pixel, expected)
 
     @cpu_and_gpu
