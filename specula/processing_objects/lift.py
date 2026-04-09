@@ -43,7 +43,6 @@ class Lift(BaseProcessingObj):
                  n_iter: int=20,
                  fft_res: int=2,
                  fix: bool=False,
-                 debug: bool=False,
                  target_device_idx: int = None,
                  precision: int = None):
         """
@@ -99,7 +98,6 @@ class Lift(BaseProcessingObj):
         self.cropped_size = cropped_size
         self.fft_res = fft_res
         self.fix = bool(fix)
-        self.debug = bool(debug)
 
         # Derived parameters
         self.modes = None
@@ -374,14 +372,6 @@ class Lift(BaseProcessingObj):
             # Update ROI based on new image
             newCenter = self.calcCenter(I0)
             I0roi = self.crop(I0, newCenter)
-            if self.debug:
-                fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(8, 4))
-                axes[0].imshow(psfRoi, origin='lower')
-                axes[0].set_title(f'Iteration {i} - ROI of original PSF')
-                axes[1].imshow(I0roi, origin='lower')
-                axes[1].set_title(f'Iteration {i} - ROI of current estimate')
-                plt.tight_layout()
-                plt.show()
             # Renormalize flux and EF based on new ROI
             flux *= self.calcCroppedFlux(psf, newCenter) / I0roi.sum()
             norm = self.xp.sqrt(flux) / self.xp.sqrt(self.abs2(complexFieldFFT).sum())
